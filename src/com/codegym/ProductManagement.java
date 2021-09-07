@@ -1,6 +1,9 @@
 package com.codegym;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProductManagement {
@@ -57,20 +60,71 @@ public class ProductManagement {
         }
         return isDelete;
     }
-//
-//    // sắp xếp sản phẩm theo id
-//    public ProductManagement sortProduct() {
-//
-//        for (int i = 0; i < products.size()- 1; i++) {
-//            for (int j = products.size() - 1; j > i; j--) {
-//                if (products.get(i).getPrice() > products.get(j).getPrice() ) {
-//                    Product temp = products.get(i);
-//                    products.get(i) = products.get(j);
-//
-//
-//                }
-//            }
-//        }
-//    }
+
+    public void sortProduct() {
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                if (o1.getPrice() < o2.getPrice()) {
+                    return -1;
+                }
+                return 1;
+            }
+        });
+    }
+
+
+    public void findMaxProduct() {
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                if (o1.getPrice() > o2.getPrice()) {
+                    return -1;
+                }
+                return 1;
+            }
+        });
+        Product maxProduct = products.get(0);
+        System.out.println("Sản phẩm có giá cao nhất là: \n" + maxProduct);
+    }
+
+    public  void writeProductToFile() {
+        try {
+            FileWriter fw = new FileWriter("sanpham.csv",true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Product product : products) {
+                bw.write(String.valueOf(product));
+                bw.newLine();
+            }
+            bw.close();
+            fw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Ghi thành công !!!!");
+
+    }
+    public  void readProductFromFile(){
+        try {
+            FileReader fileReader = new FileReader("sanpham.csv");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = "";
+
+            while (true){
+                if(line== null){
+                    break;
+                }
+                line =bufferedReader.readLine();
+                System.out.println(line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

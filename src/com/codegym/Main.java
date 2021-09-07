@@ -35,25 +35,46 @@ public class Main {
                     break;
                 }
                 case 5: {
-                    System.out.println(" 5. Sắp xếp sản phẩm theo tên !!!");
+                    sortListProduct(productManagement);
+                    break;
+                }
+                case 6: {
+                    productManagement.findMaxProduct();
+                    break;
+                }
+                case 7: {
+                    readFileProduct(productManagement);
+                    break;
 
+                }
+                case 8: {
+                    writeProductToFile(productManagement);
+                    break;
+                }
 
-
-                    }
                 case 0: {
                     System.exit(0);
                 }
-
-
-
-
-
             }
         } while (choice != 0);
 
 
     }
 
+    private static void writeProductToFile(ProductManagement productManagement) {
+        System.out.println("8. Ghi danh sách sản phẩm vào file! ");
+        productManagement.writeProductToFile();
+    }
+
+    private static void readFileProduct(ProductManagement productManagement) {
+        System.out.println("7.Đọc dữ liệu từ file sản phẩm!!");
+        productManagement.readProductFromFile();
+    }
+
+    private static void sortListProduct(ProductManagement productManagement) {
+        productManagement.sortProduct();
+        System.out.println("Danh sách sản phẩm đã được sắp xếp !!!!");
+    }
 
 
     private static void deleteProduct(ProductManagement productManagement) {
@@ -62,9 +83,9 @@ public class Main {
         System.out.println("Nhập mã sản phẩm cần xóa: ");
         String id = scanner.nextLine();
         int index = productManagement.findProductById(id);
-        if(index != -1){
+        if (index != -1) {
             productManagement.deleteProduct(id);
-        }else{
+        } else {
             System.out.println("Mã sản phẩm không hợp lệ !!!!");
         }
     }
